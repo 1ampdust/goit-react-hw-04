@@ -1,5 +1,5 @@
 // ImageModal.jsx
-import ReactModal from 'react-modal';
+import ReactModal from "react-modal";
 
 const ImageModal = ({ imageUrl, alt, isOpen, onRequestClose }) => {
   return (
