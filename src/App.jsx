@@ -1,35 +1,60 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import Loader from "./components/Loader";
+import ErrorMessage from "./components/ErrorMassage";
+import SearchBar from "./components/SearchBar";
+import ImageGallery from "./components/ImageGallery";
+import { fetchImages, fetchImagesByQuery } from "./components/axiosInstance"; // Импортируем функции запросов из axiosInstance
 
 const App = () => {
-  const [articles, setArticles] = useState([]);
+  const [images, setImages] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
-    async function fetchArticles() {
-      const response = await axios.get(
-        "<https://hn.algolia.com/api/v1/search?query=react>"
-      );
-      setArticles(response.data.hits);
+    async function fetchImagesData() {
+      try {
+        setIsLoading(true);
+        const data = await fetchImages();
+        setImages(data);
+      } catch (error) {
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
     }
 
-    fetchArticles();
+    fetchImagesData();
   }, []);
+
+  useEffect(() => {
+    if (query.length === 0) return;
+
+    async function fetchImagesByQueryData() {
+      try {
+        setIsLoading(true);
+        const data = await fetchImagesByQuery(query);
+        setImages(data.results); // Передаем только результаты изображений
+      } catch (error) {
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchImagesByQueryData();
+  }, [query]);
+
+  const onSetSearchQuery = (searchTerm) => {
+    setQuery(searchTerm);
+  };
 
   return (
     <div>
-      <h1>Latest articles</h1>
-
-      {articles.length > 0 && (
-        <ul>
-          {articles.map(({ objectID, url, title }) => (
-            <li key={objectID}>
-              <a href={url} target="_blank" rel="noreferrer noopener">
-                {title}
-              </a>
-            </li>
-          ))}
-        </ul>
-      )}
+      <SearchBar onSetSearchQuery={onSetSearchQuery} />
+      {isLoading && <Loader />}
+      {isError && <ErrorMessage />}
+      {images && <ImageGallery images={images} />}
     </div>
   );
 };
