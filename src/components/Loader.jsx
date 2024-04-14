@@ -1,3 +1,4 @@
+//Loader.jsx
 import { MagnifyingGlass } from "react-loader-spinner";
 
 const Loader = () => {

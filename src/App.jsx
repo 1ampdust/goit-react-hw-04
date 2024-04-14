@@ -1,9 +1,11 @@
+//App.jsx
 import { useEffect, useState } from "react";
 import Loader from "./components/Loader";
 import ErrorMessage from "./components/ErrorMassage";
 import SearchBar from "./components/SearchBar";
 import ImageGallery from "./components/ImageGallery";
-import { fetchImages, fetchImagesByQuery } from "./components/axiosInstance"; // Импортируем функции запросов из axiosInstance
+import { fetchImages, fetchImagesByQuery } from "./components/axiosInstance";
+
 
 const App = () => {
   const [images, setImages] = useState(null);
@@ -34,7 +36,7 @@ const App = () => {
       try {
         setIsLoading(true);
         const data = await fetchImagesByQuery(query);
-        setImages(data.results); // Передаем только результаты изображений
+        setImages(data.results);
       } catch (error) {
         setIsError(true);
       } finally {

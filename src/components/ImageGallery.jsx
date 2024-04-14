@@ -1,3 +1,4 @@
+//ImageGallery.jsx
 const ImageGallery = ({ images }) => {
   return (
     <ul>

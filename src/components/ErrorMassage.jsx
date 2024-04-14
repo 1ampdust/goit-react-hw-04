@@ -1,3 +1,4 @@
+//ErrorMessage.jsx
 const ErrorMessage = ({
   message = "Oops, something went wrong, please reload the page!😢",
 }) => {
