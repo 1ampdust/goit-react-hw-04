@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [articles, setArticles] = useState([]);
+
+  useEffect(() => {
+    async function fetchArticles() {
+      const response = await axios.get(
+        "<https://hn.algolia.com/api/v1/search?query=react>"
+      );
+      setArticles(response.data.hits);
+    }
+
+    fetchArticles();
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div>
+      <h1>Latest articles</h1>
 
-export default App
+      {articles.length > 0 && (
+        <ul>
+          {articles.map(({ objectID, url, title }) => (
+            <li key={objectID}>
+              <a href={url} target="_blank" rel="noreferrer noopener">
+                {title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
+
+export default App;
