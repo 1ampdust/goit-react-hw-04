@@ -1,17 +1,26 @@
-// ImageModal.jsx
-import ReactModal from "react-modal";
+import Modal from "react-modal";
+import css from "./ImageModal.module.css";
 
-const ImageModal = ({ imageUrl, alt, isOpen, onRequestClose }) => {
+Modal.setAppElement("#root");
+
+const ImageModal = ({ isOpen, image, onCloseModal }) => {
+  const imageSrc = image && image.imageSrc;
+
   return (
-    <ReactModal
+    <Modal
+      overlayClassName={css.backdrop}
+      className={css.modalWindow}
       isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      contentLabel="Image Modal"
+      onRequestClose={onCloseModal}
     >
-      <div>
-        <img src={imageUrl} alt={alt} />
-      </div>
-    </ReactModal>
+      {imageSrc && (
+        <img
+          className={css.imageModal}
+          src={imageSrc}
+          alt={image && image.alt_description}
+        />
+      )}
+    </Modal>
   );
 };
 
