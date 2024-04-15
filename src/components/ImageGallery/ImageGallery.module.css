@@ -1,4 +1,4 @@
-.gallery {
+.imageGallery {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -7,14 +7,20 @@
     margin: 30px 20px;
 }
 
-.galleryCard {
+.imageGalleryCard {
     transition: transform .3s;
-    border: 1px solid #000000;
+    border: 1px solid #b39bc8;
     border-radius: 6px;
     overflow: hidden;
+    -webkit-transition: background-color 1s ease-out;
+        -moz-transition: background-color 1s ease-out;
+        -o-transition: background-color 1s ease-out;
+        transition: background-color 1s ease-out;
 }
 
-.galleryCard:hover,
-.galleryCard:focus {
+.imageGalleryCard:hover,
+.imageGalleryCard:focus {
     transform: scale(1.05);
+    border: 1px solid #f172a1;
+    cursor: pointer;
 }

@@ -13,15 +13,15 @@ const ImageCard = ({ image, onImageClick }) => {
     <div>
       <img
         onClick={() => onImageClick(imageCardInfo)}
-        className={css.image}
+        className={css.cardImage}
         src={image.urls.small}
         alt={image.alt_description}
       />
-      <div className={css.imageInfo}>
-        <p>
+      <div className={css.cardImageInfo}>
+        <p className={css.cardImageText}>
           Author: <span>{image.user.name}</span>
         </p>
-        <p>
+        <p className={css.cardImageText}>
           Likes: <span>{image.likes}</span>
         </p>
       </div>
