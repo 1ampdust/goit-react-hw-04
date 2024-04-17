@@ -1,12 +1,17 @@
 import { Formik, Form, Field } from 'formik';
 import css from './SearchBar.module.css';
 import magnifyingGlassSvg from './magnifyingGlass.svg';
+import { toast } from 'react-hot-toast';
 
 const SearchBar = ({ onSubmit }) => {
   const handleSubmit = (values, actions) => {
     const formattedSearch = values.search.trim().toLowerCase();
-    onSubmit(formattedSearch);
-    actions.resetForm();
+    if (formattedSearch !== '') {
+      onSubmit(formattedSearch);
+      actions.resetForm();
+    } else {
+      toast.error('Enter your search term!');
+    }
   };
 
   return (
